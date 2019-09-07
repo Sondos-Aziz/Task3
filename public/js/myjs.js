@@ -49,7 +49,7 @@ $scope.uploadFile =[];
             dataType: 'json',
         }).then(function success(e) {
             console.log(e);
-            // $scope.files = e.data;
+             // $scope.files = e.data;
             // alert('sucessful');
 
         }, function error(error) {

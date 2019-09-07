@@ -65,14 +65,16 @@ class uploadExcelController extends Controller
                         //add the dataExcel to a temporary model
                         $batches->BatchNo = $value[0];
                         $batches->dateOfPayment= \Carbon\Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($value[5]));
-//                            Carbon::create($value[5][0], $value[5][2], $value[5][4]);
                         $batches->sponsorNo = $value[1];
+                        $date = Carbon::now();
+                        $batches->created_at=$date->toDateTimeString();
                         $batchesArray [] = $batches;
 
                         $beneficiary->beneficiaryNo = $value[2];
                         $beneficiary->currency = $value[3];
                         $beneficiary->amount = $value[4];
                         $beneficiary->batch_No = $value[0];
+//                        $beneficiaryArray [] = $beneficiary;
 
                         if ($batches->BatchNo != $value[0]) {
                             $batches->sponsorNo = $value[1];
@@ -92,6 +94,7 @@ class uploadExcelController extends Controller
                             $beneficiary->currency = $value[3];
                             $beneficiary->amount = $value[4];
                             $beneficiary->batch_No = $value[0];
+                            $beneficiary->created_at=$date->toDateTimeString();
                             $beneficiaryArray [] = $beneficiary;
 //dd('fgggg');
                         } elseif($batches->batchNo == $value[0] and
@@ -108,8 +111,8 @@ class uploadExcelController extends Controller
 
                 }
                 foreach ($beneficiaryArray as $value ){
+//                    dd('dvxfgr');
                     DB::table('beneficiaries')->insert($value->toArray() );
-
                 }
 
         }
